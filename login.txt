@@ -1,1 +1,0 @@
-INSERT IGNORE INTO login(login,senha)VALUES ('root',md5('teste'));
