@@ -1,1 +1,0 @@
-CREATE TABLE IF NOT EXISTS login(login varchar(200) unique,senha varchar(200) unique);
