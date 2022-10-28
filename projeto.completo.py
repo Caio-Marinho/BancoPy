@@ -180,6 +180,16 @@ def produto():
         con = MySQL.Connection()
         cursor = con.cursor
         cursor.execute("use projeto;")
+        cursor.execute('CREATE TABLE IF NOT EXISTS produto( '
+                       'codigo int primary key, '
+                       'produto varchar(100), '
+                       'marca varchar(100),'
+                       'modelo varchar(100));')
+        prod = open("prod.txt", 'r')
+        prod.seek(0)
+        for linha in prod:
+            cursor.execute(f"{linha}")
+        prod.close()
         cursor.execute("SELECT * FROM produto")
         p = cursor.fetchall()
         tela_6.tableWidget.setRowCount(len(p))
@@ -187,6 +197,8 @@ def produto():
         for i in range(0, len(p)):
             for j in range(0, len(p[0])):
                 tela_6.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(str(p[i][j])))
+        con.commit()
+        con.close()
         con.close()
     except Exception as erro:
         print(erro)
@@ -200,20 +212,22 @@ def registro_produto():
     try:
         con = MySQL.Connection()
         cursor = con.cursor
+        prod = open("prod.txt", 'a+')
+        prod.seek(0)
         cursor.execute("use projeto;")
-        cursor.execute('CREATE TABLE IF NOT EXISTS produto( '
-                       'codigo int primary key, '
-                       'produto varchar(100), '
-                       'marca varchar(100),'
-                       'modelo varchar(100));')
-        cursor.execute("INSERT INTO produto(codigo,produto,marca,modelo)"
+        cursor.execute("INSERT IGNORE INTO produto(codigo,produto,marca,modelo)"
                        "VALUES('" + P.get_codigo() + "','" + P.get_tipo() + "','" + P.get_marca() + "','"
                        + P.get_modelo() + "');")
+        prod.write("INSERT IGNORE INTO produto(codigo,produto,marca,modelo)"
+                   "VALUES('" + P.get_codigo() + "','" + P.get_tipo() + "','" + P.get_marca() + "','"
+                   + P.get_modelo() + "');\n")
+        prod.close()
         cursor.execute(f"SELECT * FROM produto WHERE codigo = {P.get_codigo()}")
         p = cursor.fetchone()
-        confirm = QMessageBox.question(confirmação, "confirmação","Tem Certeza Disso?", QMessageBox.Yes | QMessageBox.No)
+        confirm = QMessageBox.question(AVISO, "AVISO", "Tem Certeza Disso?", QMessageBox.Yes | QMessageBox.No)
         if confirm == QMessageBox.Yes:
             con.commit()
+            con.close()
             con.close()
             tela_6.lineEdit.setText("")
             tela_6.lineEdit_2.setText("")
@@ -240,6 +254,8 @@ def registro_produto_consulta():
         for i in range(0, len(p)):
             for j in range(0, len(p[0])):
                 tela_6.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(str(p[i][j])))
+        con.commit()
+        con.close()
         con.close()
     except Exception as erro:
         print(erro)
@@ -1261,7 +1277,7 @@ tela_23 = uic.loadUi("Lojas_D.ui")
 tela_24 = uic.loadUi("Caractéristicas_D_2.ui")
 tela_25 = uic.loadUi("consulta.ui")
 tela_26 = uic.loadUi("consulta_2.ui")
-confirmação = uic.loadUi("confirmação.ui")
+AVISO = uic.loadUi("confirmação.ui")
 tela.INICIAR.clicked.connect(SGBD)
 tela_2.MYSQL.clicked.connect(m_MySQL)
 tela_2.POSTGRESQL.clicked.connect(p_PostgreSQL)
