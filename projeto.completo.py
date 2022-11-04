@@ -40,7 +40,6 @@ def m_MySQL():
                         "senha varchar(200) unique);")
         tab_login.seek(0)
         Login = open("login.txt", 'r')
-
         cursor.execute(database.read())
         cursor.execute(use.read())
         cursor.execute(tab_login.read())
@@ -213,14 +212,13 @@ def registro_produto():
         con = MySQL.Connection()
         cursor = con.cursor
         prod = open("prod.txt", 'a+')
-        prod.seek(0)
         cursor.execute("use projeto;")
-        cursor.execute("INSERT IGNORE INTO produto(codigo,produto,marca,modelo)"
-                       "VALUES('" + P.get_codigo() + "','" + P.get_tipo() + "','" + P.get_marca() + "','"
-                       + P.get_modelo() + "');")
         prod.write("INSERT IGNORE INTO produto(codigo,produto,marca,modelo)"
                    "VALUES('" + P.get_codigo() + "','" + P.get_tipo() + "','" + P.get_marca() + "','"
                    + P.get_modelo() + "');\n")
+        prod.seek(0)
+        for linha in prod:
+            cursor.execute(f"{linha}")
         prod.close()
         cursor.execute(f"SELECT * FROM produto WHERE codigo = {P.get_codigo()}")
         p = cursor.fetchone()
