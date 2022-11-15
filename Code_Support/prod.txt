@@ -1,0 +1,10 @@
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('1','SmartPhone','Apple','Iphone 11 Pro Max');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('2','SmartPhone','Samsung','Galaxy A30');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('3','SmartPhone','Motorola','Moto E');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('4','SmartPhone','LG','K10');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('5','SmartPhone','Samsung','Galaxy J2 Prime');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('6','SmartPhone','Motorola','Moto G4');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('7','SmartPhone','Apple','Iphone 12 Pro');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('8','SmartPhone','Samsung','Galaxy S10');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('9','SmartPhone','Apple','Iphone 13');
+INSERT IGNORE INTO produto(codigo,produto,marca,modelo)VALUES('10','SmartPhone','Samsung','Galaxy S4');
